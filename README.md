@@ -1,55 +1,110 @@
-# React + TypeScript + Vite
+# AI-First CRM
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+AI-First CRM is a full-stack web application built for managing interactions with Healthcare Professionals (HCPs). Instead of filling out long forms, users can simply describe a meeting with a doctor in plain English. The AI reads that text and pulls out useful details like the doctor's name, hospital, drug discussed, sentiment, action items, follow-up date, and a short summary.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- AI Chat Assistant for logging and querying interactions
+- AI extracts meeting details from natural language input
+- HCP Search to find doctors by name, hospital, or specialty
+- Interaction History to view past meetings
+- Follow-up Recommendations based on previous interactions
+- Responsive UI that works on different screen sizes
+- Dashboard with an overview of key activity
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the Oxlint configuration
+### Frontend
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Redux Toolkit
+- Framer Motion
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Backend
+
+- FastAPI
+- Python
+- PostgreSQL
+- SQLAlchemy
+- Alembic
+- LangGraph
+- LangChain
+- Groq / OpenAI LLM
+
+## Project Structure
+
+```
+AI-First-CRM/
+├── src/                    # React frontend
+│   ├── components/         # Reusable UI and feature components
+│   ├── pages/              # Route pages (Dashboard, HCP List, etc.)
+│   ├── layouts/            # App layout and navigation
+│   ├── redux/              # Redux store and slices
+│   ├── services/           # API service calls
+│   └── styles/             # Global styles
+├── server/                 # FastAPI backend
+│   ├── app/
+│   │   ├── agents/         # LangGraph agent logic
+│   │   ├── ai/             # LLM client and prompts
+│   │   ├── models/         # SQLAlchemy database models
+│   │   ├── routers/        # API route handlers
+│   │   ├── schemas/        # Pydantic request/response schemas
+│   │   ├── services/       # Business logic
+│   │   └── tools/          # AI tools (search, log, recommend)
+│   ├── alembic/            # Database migrations
+│   └── requirements.txt
+└── package.json
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Installation
 
-## AI / Groq Setup
+### Frontend
 
-This project supports a Groq-based AI integration used to extract structured data from free-text interactions.
-
-1. Add your `GROQ_API_KEY` to the backend env file: `server/.env`:
-
-```
-GROQ_API_KEY=your_api_key_here
+```bash
+npm install
+npm run dev
 ```
 
-2. The backend will fall back to a lightweight mock extractor if `GROQ_API_KEY` is not set.
+The frontend runs at `http://localhost:5173`.
 
-3. The AI endpoints are available under `/api/v1/ai`:
+### Backend
 
-- `POST /api/v1/ai/log_interaction` — body: `{ "text": "..." }`
-- `PUT /api/v1/ai/edit_interaction` — body: edit fields
-- `GET /api/v1/ai/search_hcp` — query params: `name`, `hospital`, `specialty`
-- `GET /api/v1/ai/view_interactions?hcp_id=...`
-- `POST /api/v1/ai/recommend_next_action` — body: `{ "hcp_id": "..." }`
+```bash
+cd server
+python -m venv .venv
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
 
-4. Run the backend as usual. The project uses a virtualenv at `d:\CRM\.venv311` during local development in this workspace.
+The backend runs at `http://localhost:8000`.
 
+Before starting the backend, copy `server/.env.example` to `server/.env` and set your database URL and `GROQ_API_KEY`.
+
+## Architecture
+
+```mermaid
+flowchart TD
+    User --> ReactFrontend[React Frontend]
+    ReactFrontend --> Redux
+    Redux --> FastAPIBackend[FastAPI Backend]
+    FastAPIBackend --> LangGraph
+    LangGraph --> LLM
+    LLM --> PostgreSQL
+```
+
+## Future Improvements
+
+- Add user authentication and role-based access
+- Support voice input for logging meetings
+- Add email reminders for follow-up tasks
+- Export interaction reports as PDF
+- Improve AI accuracy with more training examples
+
+## Author
+
+**Chinmaya Madhavan**
