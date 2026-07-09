@@ -1,0 +1,8 @@
+export { DashboardPage } from './Dashboard'
+export { LogInteractionPage } from './LogInteraction'
+export { HcpListPage } from './HcpList'
+export { HcpProfilePage } from './HcpProfile'
+export { InteractionHistoryPage } from './InteractionHistory'
+export { FollowUpTasksPage } from './FollowUpTasks'
+export { ReportsPage } from './Reports'
+export { SettingsPage } from './Settings'
