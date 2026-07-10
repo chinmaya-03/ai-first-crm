@@ -34,7 +34,7 @@ AI-First CRM is a full-stack web application built for managing interactions wit
 - Alembic
 - LangGraph
 - LangChain
-- Groq / OpenAI LLM
+- Groq 
 
 ## Project Structure
 
