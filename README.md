@@ -107,4 +107,4 @@ flowchart TD
 
 ## Author
 
-**Chinmaya Madhavan**
+**Chinmaya M**
